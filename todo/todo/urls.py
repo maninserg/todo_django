@@ -18,5 +18,6 @@ from django.urls import path
 from to_do_lists import views
 
 urlpatterns = [
+    path('admin/', admin.site.urls),
     path('', views.home_page, name='home'),
 ]
