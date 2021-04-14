@@ -1,10 +1,10 @@
+from django.test import LiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import time
-import unittest
 
 
-class NewVisitorTest(unittest.TestCase):
+class NewVisitorTest(LiveServerTestCase):
 
     def setUp(self):
         """ open firefox """
@@ -19,7 +19,7 @@ class NewVisitorTest(unittest.TestCase):
     def test_can_start_a_list_and_retrive_it_later(self):
 
         # Test that 'ToDo' is in the title
-        self.browser.get('http:/localhost:8000')
+        self.browser.get(self.live_server_url)
         self.assertIn('ToDo', self.browser.title)
 
         # Test that 'ToDo' is in the heder in the home page
