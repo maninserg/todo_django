@@ -7,13 +7,14 @@ import time
 
 MAX_WAIT = 10
 
+
 class NewVisitorTest(LiveServerTestCase):
 
     def setUp(self):
         """ open firefox """
         self.browser = webdriver.Firefox()
 
-    def wait_for_row_in_list_table(self,row_text):
+    def wait_for_row_in_list_table(self, row_text):
         start_time = time.time()
         while True:
             try:
@@ -60,10 +61,46 @@ class NewVisitorTest(LiveServerTestCase):
         self.wait_for_row_in_list_table('1: Buy peacock feathers')
         self.wait_for_row_in_list_table('2: Make mouschk by peacock feathers')
 
+    def test_multiple_users_can_starts_lists_at_different_urls(self):
+
+        # User Alice go to our site and add task to her list
+        self.browser.get(self.live_server_url)
+        inputbox = self.browser.find_element_by_id('id_new_item')
+        inputbox.send_keys('Buy peacock feathers')
+        inputbox.send_keys(Keys.ENTER)
+        self.wait_for_row_in_list_table('1: Buy peacock feathers')
+
+        alice_list_url = self.browser.current_url
+        self.assertRegex(alice_list_url, '/lists/.+')
+
+        # User Bob go to our site and add task to his list
+        # And He can't see Alice's list of tasks
+
+        self.browser.quit()
+        self.browser.Firefox()
+
+        self.browser.get(self.live_server_url)
+        page_text = self.browser.find_element_by_tag_name('body').text
+        self.assertNotIn('Buy peacock feathers', page_text)
+        self.assertNotIn('Make mouschk by peacock feathers')
+
+        inputbox = self.browser.find_element_by_id('id_new_item')
+        inputbox.send_keys('Buy milk')
+        inputbox.send_keys(Keys.ENTER)
+        self.wait_for_row_in_list_table('1: Buy milk')
+
+        bob_list_url = self.browser.current_url
+        self.assertRegex(bob_list_url, '/lists/.+')
+        self.assertNotEqual(alice_list_url, bob_list_url)
+
+        page_text = self.browser.find_element_by_tag_name('body').text
+        self.assertNotIn('Buy peacock feathers', page_text)
+        self.assertIn('Buy milk', page_text)
+
     def tearDown(self):
         """ close firefox """
         self.browser.quit()
 
 
 if __name__ == "__main__":
-    unittest.main()
+    pass
