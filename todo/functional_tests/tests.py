@@ -53,7 +53,7 @@ class NewVisitorTest(unittest.TestCase):
         # Test that a table with tasks is on the home page and
         # there is task was typed before in the table
         self.check_for_row_in_list_table('1: Buy peacock feathers')
-        self.assertIn('2: Make mouschk by peacock feathers')
+        self.check_for_row_in_list_table('2: Make mouschk by peacock feathers')
 
     def tearDown(self):
         """ close firefox """
