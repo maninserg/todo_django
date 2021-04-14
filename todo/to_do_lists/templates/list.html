@@ -1,8 +1,8 @@
 <html>
-	<title>ToDo lists</title>
+	<title>Start a ToDo list</title>
 	<body>
 		<h1>Your ToDo list</h1>
-		<form method='POST' action='/'>
+		<form method='POST'>
 		<input name='item_text' id='id_new_item' placeholder='Enter a to-do item'/>
 		{% csrf_token %}
 		</form>

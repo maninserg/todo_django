@@ -77,12 +77,12 @@ class NewVisitorTest(LiveServerTestCase):
         # And He can't see Alice's list of tasks
 
         self.browser.quit()
-        self.browser.Firefox()
+        self.browser = webdriver.Firefox()
 
         self.browser.get(self.live_server_url)
         page_text = self.browser.find_element_by_tag_name('body').text
         self.assertNotIn('Buy peacock feathers', page_text)
-        self.assertNotIn('Make mouschk by peacock feathers')
+        self.assertNotIn('Make mouschk by peacock feathers', page_text)
 
         inputbox = self.browser.find_element_by_id('id_new_item')
         inputbox.send_keys('Buy milk')
