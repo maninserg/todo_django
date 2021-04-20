@@ -1,12 +1,12 @@
 # todo_django
 
 
-# About 
+## About 
 
 
-<hr>
-
-# Description
 
 
-<hr>
+## Description
+
+
+
