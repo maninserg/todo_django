@@ -1,4 +1,4 @@
-from django.test import LiveServerTestCase
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import WebDriverException
@@ -8,7 +8,7 @@ import time
 MAX_WAIT = 10
 
 
-class NewVisitorTest(LiveServerTestCase):
+class NewVisitorTest(StaticLiveServerTestCase):
 
     def setUp(self):
         """ open firefox """
@@ -32,11 +32,11 @@ class NewVisitorTest(LiveServerTestCase):
 
         # Test that 'ToDo' is in the title
         self.browser.get(self.live_server_url)
-        self.assertIn('ToDo', self.browser.title)
+        self.assertIn('To-Do', self.browser.title)
 
         # Test that 'ToDo' is in the heder in the home page
         header_text = self.browser.find_element_by_tag_name('h1').text
-        self.assertIn('ToDo', header_text)
+        self.assertIn('To-Do', header_text)
 
         # Test that an input box is on the home page
         inputbox = self.browser.find_element_by_id('id_new_item')
